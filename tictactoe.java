@@ -1,3 +1,4 @@
+
 package tictactoe;
 
 import java.util.Scanner;
@@ -17,6 +18,48 @@ public class tictactoe {
 	public static void main(String[] args) throws InterruptedException {
 		start();
 		input();
+		playFirstChance();
+		for(int i=0;i<3;i++) {
+			moveOn();
+		}
+		lastChance();
+	}
+	private static void lastChance() throws InterruptedException {
+		if(Math.random()>0.4) {
+			System.out.println("there's just one place left i'll fill it for you");
+			fillempty();
+//			TimeUnit.MILLISECONDS.sleep(1500);
+			printBoard();
+			
+		}
+		else
+		input();
+		if(didwon(user)) {
+			userwon();
+			return;
+		}
+		System.out.println();
+		boring();
+		
+	}
+	private static void moveOn() throws InterruptedException {
+		input();
+		if(didwon(user)) {
+			userwon();
+			return;
+		}
+		if(isCwinning()) {
+			mychance(true);
+			printBoard();
+			compwon();
+			return;
+		}
+		cstrk();
+		printBoard();
+		
+	}
+	public static void playFirstChance() throws InterruptedException {
+		mychance(false);
 		if(lastchance==4)
 		{
 			ar[0][0]=computer;
@@ -49,39 +92,8 @@ public class tictactoe {
 			ar[1][1]=computer;
 			lastchanceC=4;
 			}
-		}
-		mychance(false);
+		} 
 		printBoard();
-		for(int i=0;i<3;i++) {
-			input();
-			if(didwon(user)) {
-				userwon();
-				return;
-			}
-			if(isCwinning()) {
-				mychance(true);
-				printBoard();
-				compwon();
-				return;
-			}
-			cstrk();
-			printBoard();
-		}
-		if(Math.random()>0.4) {
-			System.out.println("there's just one place left i'll fill it for you");
-			fillempty();
-			TimeUnit.MILLISECONDS.sleep(1500);
-			printBoard();
-			
-		}
-		else
-		input();
-		if(didwon(user)) {
-			userwon();
-			return;
-		}
-		System.out.println();
-		boring();
 	}
 	
 	
@@ -140,10 +152,10 @@ public class tictactoe {
 
 	private static void mychance(boolean b) throws InterruptedException {
 		System.out.println("Now its my turn");
-		TimeUnit.MILLISECONDS.sleep(1500);
+		TimeUnit.MILLISECONDS.sleep(500);
 		if(b) {
 			System.out.println("nice move");
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 		}
 		if(Math.random()>0.5) {
 			if(Math.random()>0.67) {
@@ -359,8 +371,16 @@ public class tictactoe {
 		TimeUnit.MILLISECONDS.sleep(600);
 		System.out.print("Enter your choice");
 		System.out.println();
-		int i=in.nextInt()-1;
-		if(i>=0&&i<9&&ar[i/3][i%3].equals(empt)) {
+		String ch=in.nextLine();
+			while(ch.isEmpty())
+				ch=in.nextLine();
+		if(ch.length()!=1||ch.charAt(0)-49<0||ch.charAt(0)-49>8) {
+			System.out.println("You can not enter here");
+			input();
+			return;
+		}
+		byte i=(byte) (ch.charAt(0)-49);
+		if(ar[i/3][i%3].equals(empt)) {
 				ar[i/3][i%3]=user;
 				lastchance=i;
 			}
@@ -433,7 +453,8 @@ public class tictactoe {
 		entr();
 		System.out.println("enter what symbol you want to use");
 		user=in.nextLine().trim();
-		
+		while(user.isEmpty())
+			user=in.nextLine().trim();
 		computer=findComp();
 		System.out.println();
 		System.out.println("& I WILL USE   "+computer);
