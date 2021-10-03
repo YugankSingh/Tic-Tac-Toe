@@ -1,6 +1,4 @@
 
-package tictactoe;
-
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +26,7 @@ public class tictactoe {
 		if(Math.random()>0.4) {
 			System.out.println("there's just one place left i'll fill it for you");
 			fillempty();
-//			TimeUnit.MILLISECONDS.sleep(1500);
+		//			TimeUnit.MILLISECONDS.sleep(1500);
 			printBoard();
 			
 		}
@@ -185,11 +183,12 @@ public class tictactoe {
 					System.out.println("You lost  ");
 					TimeUnit.MILLISECONDS.sleep(10);
 				}
-				System.out.print("Yay i won  ");
+				System.out.print("Yay i WON  ");
 				TimeUnit.MILLISECONDS.sleep(10);
 			}
 				System.out.println();
 		}
+		System.exit(0);
 	}
 
 
@@ -207,6 +206,7 @@ public class tictactoe {
 		}
 		TimeUnit.SECONDS.sleep(1);
 		System.out.println("you won");
+		System.exit(0);
 	}
 
 
